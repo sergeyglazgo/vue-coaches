@@ -29,26 +29,18 @@ const store = createStore({
   },
   actions: {
     async loadCoaches(context) {
-      try {
-        const responce = await axios.get(
-          `https://vue-http-demo-683e3-default-rtdb.europe-west1.firebasedatabase.app/coaches/.json`
-        );
-        context.commit('setCoaches', responce.data);
-      } catch (error) {
-        console.log(error);
-      }
+      const responce = await axios.get(
+        `https://vue-http-demo-683e3-default-rtdb.europe-west1.firebasedatabase.app/coaches/.json`
+      );
+      context.commit('setCoaches', responce.data);
     },
     async saveInfo(context, payload) {
-      try {
         const token = context.getters.token;
         const userId = context.getters.userId;
-        axios.put(
+        await axios.put(
           `https://vue-http-demo-683e3-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json?auth=${token}`,
           payload
         );
-      } catch (error) {
-        console.log(error);
-      }
     },
   },
   getters: {

@@ -1,7 +1,7 @@
 <template>
   <el-button type="default" @click="dialogFormVisible = true">Sign In</el-button>
 
-  <el-dialog v-model="dialogFormVisible" title="Sign In">
+  <el-dialog width="480px" v-model="dialogFormVisible" title="Sign In">
     <p v-if="!!error">{{ error }}</p>
     <p v-if="isLoading">Authenticating...</p>
     <el-form :model="form">
@@ -20,10 +20,12 @@
         <el-input v-model="form.email" />
       </el-form-item>
       <el-form-item label="Password" prop="pass" :label-width="formLabelWidth">
-        <el-input v-model="form.password" type="password" autocomplete="off" />
+        <el-input v-model="form.password" type="password" autocomplete="off" show-password />
       </el-form-item>
     </el-form>
-    <p v-if="!formIsValid">Please fill the fields</p>
+    <div v-if="!isFormValid" class="isFormValid">
+      <span>Please fill the form</span>
+    </div>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
@@ -43,7 +45,7 @@ export default {
     return {
       dialogFormVisible: false,
       mode: "login",
-      formIsValid: true,
+      isFormValid: true,
       isLoading: false,
       error: null,
     };
@@ -76,11 +78,11 @@ export default {
   methods: {
     ...mapActions(["signup", "login"]),
     async onSubmit() {
-      this.formIsValid = true;
+      this.isFormValid = true;
       this.error = null;
 
       if (this.form.email === "" || this.form.password.length < 6) {
-        this.formIsValid = false;
+        this.isFormValid = false;
         return;
       }
 
@@ -89,11 +91,12 @@ export default {
       try {
         if (this.mode === "login") {
           await this.login({ ...this.form });
-          this.$router.replace('/account');
         } else {
           await this.signup({ ...this.form });
-          this.$router.replace('/account');
-        }
+        };
+
+        this.$router.replace('/account');
+
       } catch {
         this.error = "Failed to authenticate";
       }
@@ -115,13 +118,11 @@ export default {
 .el-button--text {
   margin-right: 15px;
 }
-.el-input {
-  width: 300px;
-}
-.el-textarea {
-  width: 300px;
-}
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+.isFormValid {
+  margin: 0;
+  color: red;
 }
 </style>

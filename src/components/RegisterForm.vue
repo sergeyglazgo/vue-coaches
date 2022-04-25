@@ -1,24 +1,31 @@
 <template>
-  <div style="margin: 20px" />
-  <el-form
-    :label-position="labelPosition.value"
-    label-width="100px"
-    :model="form"
-    style="max-width: 460px"
-  >
-    <el-form-item label="Name" >
-      <el-input v-model="form.name" />
-    </el-form-item>
-    <el-form-item label="Surname">
-      <el-input v-model="form.lastName" />
-    </el-form-item>
-    <el-form-item label="Description">
-      <el-input v-model="form.description" type="textarea" />
-    </el-form-item>
-    <el-form-item>
-      <el-button @click="onSubmit">Submit</el-button>
-    </el-form-item>
-  </el-form>
+  <section class="registration">
+    <el-form
+      :label-position="labelPosition.value"
+      label-width="100px"
+      :model="form"
+    >
+      <el-form-item label="Name">
+        <el-input v-model.trim="form.name" />
+      </el-form-item>
+      <el-form-item label="Surname">
+        <el-input v-model.trim="form.lastName" />
+      </el-form-item>
+      <el-form-item label="Description">
+        <el-input v-model.trim="form.description" type="textarea" />
+      </el-form-item>
+      <el-form-item v-if="!isFormValid" class="warning">
+        <span>Please fill the form</span>
+      </el-form-item>
+      <el-form-item v-if="error" class="warning">
+        <span>{{ error }}</span>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="cancel">Cancel</el-button>
+        <el-button @click="onSubmit">Submit</el-button>
+      </el-form-item>
+    </el-form>
+  </section>
 </template>
 
 <script>
@@ -26,6 +33,12 @@ import { reactive, ref } from "vue";
 import { mapActions } from "vuex";
 
 export default {
+  data() {
+    return {
+      isFormValid: true,
+      error: null,
+    };
+  },
   computed: {
     form() {
       return reactive({
@@ -40,15 +53,44 @@ export default {
   },
   methods: {
     ...mapActions(["saveInfo"]),
-    onSubmit() {
-      this.saveInfo({
-        ...this.form,
-        rate: "no ratings yet",
-      });
-      this.form.name = "";
-      this.form.lastName = "";
-      this.form.description = "";
+    async onSubmit() {
+      if (
+        this.form.name === "" ||
+        this.form.lastName === "" ||
+        this.form.description === ""
+      ) {
+        this.isFormValid = false;
+        return;
+      }
+      try {
+        await this.saveInfo({
+          ...this.form,
+          rate: "no ratings yet",
+        });
+        this.isFormValid = true;
+        this.form.name = "";
+        this.form.lastName = "";
+        this.form.description = "";
+      } catch {
+        this.error = 'Something went wrong';
+      }
+    },
+    cancel() {
+      this.$router.replace("/account");
     },
   },
 };
 </script>
+
+<style>
+.registration {
+  width: 500px;
+  margin: 0 auto;
+}
+</style>
+<style scoped>
+.warning {
+  margin: 0;
+  color: red;
+}
+</style>

@@ -4,7 +4,7 @@ export default {
   state() {
     return {
       messages: [],
-    }
+    };
   },
   mutations: {
     setMessages(state, payload) {
@@ -17,31 +17,23 @@ export default {
           message: payload[id].message,
           coachId: payload[id].coachId,
         });
-      };
+      }
       state.messages = messages;
     },
   },
   actions: {
     async loadMessages(context) {
-      try {
-        const token = context.getters.token;
-        const responce = await axios.get(
-          `https://vue-http-demo-683e3-default-rtdb.europe-west1.firebasedatabase.app/requests.json?auth=${token}`
-        );
-        context.commit('setMessages', responce.data);
-      } catch (error) {
-        console.log(error);
-      }
+      const token = context.getters.token;
+      const responce = await axios.get(
+        `https://vue-http-demo-683e3-default-rtdb.europe-west1.firebasedatabase.app/requests.json?auth=${token}`
+      );
+      context.commit('setMessages', responce.data);
     },
     async sendMessage(_, payload) {
-      try {
-        axios.post(
-          'https://vue-http-demo-683e3-default-rtdb.europe-west1.firebasedatabase.app/requests.json',
-          payload
-        );
-      } catch (error) {
-        console.log(error);
-      }
+      await axios.post(
+        'https://vue-http-demo-683e3-default-rtdb.europe-west1.firebasedatabase.app/requests.json',
+        payload
+      );
     },
   },
   getters: {

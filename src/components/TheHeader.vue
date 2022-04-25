@@ -1,6 +1,6 @@
 <template>
   <header class="el-header">
-    <nav>
+    <nav class="navigation flex justify-center">
       <router-link to="/coaches" class="el-button">Coaches</router-link>
       <router-link v-if="isLoggedIn" to="/account" class="el-button">
         Your Account
@@ -29,3 +29,9 @@ export default {
     }
 };
 </script>
+
+<style>
+.navigation {
+  margin-top: 30px;
+}
+</style>

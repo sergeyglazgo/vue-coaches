@@ -1,9 +1,7 @@
 <template>
-  <el-button type="text" @click="dialogFormVisible = true"
-    >Contact</el-button
-  >
+  <el-button type="text" @click="dialogFormVisible = true">Contact</el-button>
 
-  <el-dialog v-model="dialogFormVisible" title="New message">
+  <el-dialog width="480px" v-model="dialogFormVisible" title="New message">
     <el-form :model="form">
       <el-form-item label="Your name" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off" />
@@ -15,25 +13,27 @@
         <el-input v-model="form.message" type="textarea" />
       </el-form-item>
     </el-form>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button @click="onSubmit">Send</el-button>
-      </span>
-    </template>
+    <div v-if="!isFormValid" class="isFormValid">
+      <span>Please fill the form</span>
+    </div>
+    <div class="form-buttons flex-end bg-red-800">
+      <el-button @click="cancel">Cancel</el-button>
+      <el-button @click="onSubmit">Send</el-button>
+    </div>
   </el-dialog>
 </template>
 
 <script>
 import { reactive } from "vue";
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 
 export default {
-  props: ['coachId'],
+  props: ["coachId"],
   data() {
     return {
       dialogFormVisible: false,
-    }
+      isFormValid: true,
+    };
   },
   computed: {
     formLabelWidth() {
@@ -48,19 +48,32 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['sendMessage']),
+    ...mapActions(["sendMessage"]),
     onSubmit() {
       const coachId = this.coachId;
-      this.sendMessage({
-        ...this.form,
-        coachId,
+      if (
+        this.form.name === "" ||
+        this.form.email === "" ||
+        this.form.message === ""
+      ) {
+        this.isFormValid = false;
+      } else {
+        this.sendMessage({
+          ...this.form,
+          coachId,
         });
-      this.form.name = '';
-      this.form.email = '';
-      this.form.message = '';
+        this.isFormValid = true;
+        this.form.name = "";
+        this.form.email = "";
+        this.form.message = "";
+        this.dialogFormVisible = false;
+      }
+    },
+    cancel() {
       this.dialogFormVisible = false;
+      this.isFormValid = true;
     }
-  }
+  },
 };
 </script>
 
@@ -68,13 +81,17 @@ export default {
 .el-button--text {
   margin-right: 15px;
 }
-.el-input {
-  width: 300px;
-}
-.el-textarea {
-  width: 300px;
-}
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+.form-buttons {
+  display: flex;
+  justify-content: end;
+}
+.isFormValid {
+  display: flex;
+  justify-content: end;
+  margin: 0;
+  color: red;
 }
 </style>
