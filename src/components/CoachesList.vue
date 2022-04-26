@@ -6,7 +6,7 @@
     <el-input v-model="searchValue" placeholder="Search coach" />
   </div>
   <the-loader v-if="!coaches.length && !error"></the-loader>
-  <ul class="coach-list flex-col">
+  <ul class="coach-list">
     <li v-for="coach in filteredCoaches" :key="coach.id">
       <coach-card
         :id="coach.id"

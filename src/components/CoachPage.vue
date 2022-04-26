@@ -5,7 +5,7 @@
     </router-link>
     <the-loader v-if="isLoading"></the-loader>
     <h2 class="title">{{ titleCaption }}</h2>
-    <ul class="messages-list flex-column">
+    <ul class="messages-list">
       <li v-for="message in recievedMessages" :key="message.id">
         <message-card
           :id="message.id"

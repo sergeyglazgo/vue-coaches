@@ -23,7 +23,7 @@
         <el-input v-model="form.password" type="password" autocomplete="off" show-password />
       </el-form-item>
     </el-form>
-    <div v-if="!isFormValid" class="isFormValid">
+    <div v-if="!isFormValid" class="isFormValid flex justify-end">
       <span>Please fill the form</span>
     </div>
     <template #footer>

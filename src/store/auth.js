@@ -37,7 +37,7 @@ export default {
       const mode = payload.mode;
       let url =
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAT6Bm1xRsgXNhJEycD-fUO4fXDwiux4Rs';
-
+  
       if (mode === 'signup') {
         url =
           'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAT6Bm1xRsgXNhJEycD-fUO4fXDwiux4Rs';
@@ -47,18 +47,18 @@ export default {
         password: payload.password,
         returnSecureToken: true,
       });
-
+  
       const expiresIn = +responce.data.expiresIn * 1000;
       const expirationDate = new Date().getTime() + expiresIn
-
+  
       localStorage.setItem('token', responce.data.idToken);
       localStorage.setItem('userId', responce.data.localId);
       localStorage.setItem('tokenExpiration', expirationDate);
-
+  
       timer = setTimeout(() => {
         context.dispatch('autoLogout');
       }, expiresIn)
-
+  
       context.commit('setUser', {
         token: responce.data.idToken,
         userId: responce.data.localId,
@@ -68,17 +68,17 @@ export default {
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');
       const tokenExpiration = localStorage.getItem('tokenExpiration');
-
+  
       const expiresIn = +tokenExpiration - new Date().getTime();
-
+  
       if (expiresIn < 0) {
         return;
       }
-
+  
       timer = setTimeout(() => {
         context.dispatch('autoLogout');
       }, expiresIn)
-
+  
       if (token && userId) {
         context.commit('setUser', {
           token,
@@ -90,9 +90,9 @@ export default {
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
       localStorage.removeItem('tokenExpiration');
-
+  
       clearTimeout(timer);
-
+  
       context.commit('setUser', {
         userId: null,
         token: null,

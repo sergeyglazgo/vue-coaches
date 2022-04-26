@@ -13,10 +13,10 @@
         <el-input v-model="form.message" type="textarea" />
       </el-form-item>
     </el-form>
-    <div v-if="!isFormValid" class="isFormValid">
+    <div v-if="!isFormValid" class="isFormValid flex justify-end">
       <span>Please fill the form</span>
     </div>
-    <div class="form-buttons flex-end bg-red-800">
+    <div class="flex justify-end">
       <el-button @click="cancel">Cancel</el-button>
       <el-button @click="onSubmit">Send</el-button>
     </div>
@@ -84,13 +84,7 @@ export default {
 .dialog-footer button:first-child {
   margin-right: 10px;
 }
-.form-buttons {
-  display: flex;
-  justify-content: end;
-}
 .isFormValid {
-  display: flex;
-  justify-content: end;
   margin: 0;
   color: red;
 }
