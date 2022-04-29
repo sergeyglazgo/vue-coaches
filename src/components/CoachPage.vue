@@ -1,18 +1,16 @@
 <template>
   <section>
-    <router-link v-if="!isCoach" to="/register" class="el-button">
+    <router-link v-if="!isCoach" to="/register" class="el-button block mb-3 w-[300px] mx-auto">
       Register as Coach
     </router-link>
-    <the-loader v-if="isLoading"></the-loader>
-    <h2 class="title">{{ titleCaption }}</h2>
-    <ul class="messages-list">
+    <h2 class="title text-center font-bold text-2xl mb-3">{{ titleCaption }}</h2>
+    <ul v-loading="isLoading" class="messages-list w-max mx-auto">
       <li v-for="message in recievedMessages" :key="message.id">
-        <message-card
-          :id="message.id"
+        <MessageCard
           :name="message.name"
           :message="message.message"
           :email="message.email"
-        ></message-card>
+        />
       </li>
     </ul>
   </section>
@@ -20,21 +18,21 @@
 
 <script>
 import MessageCard from "./MessageCard.vue";
-import TheLoader from "./TheLoader.vue";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  components: { MessageCard, TheLoader },
+  components: { MessageCard },
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
       error: null,
     }
   },
   methods: {
-    ...mapActions(["loadMessages"]),
+    ...mapActions(["loadMessages", "loadCoaches"]),
     async getMessages() {
       try {
+        this.isLoading = true;
         await this.loadMessages();
         this.isLoading = false;
       } catch {
@@ -51,35 +49,18 @@ export default {
       return this.messages.filter((message) => message.coachId === this.userId);
     },
     titleCaption() {
-      if (this.error) {
+      if (!this.isLoading && this.error) {
         return 'Something went wrong';
-      } else if (this.recievedMessages.length) {
-        return 'Recieved Messegas';
-      } else {
+      } else if (!this.isLoading && !this.error && !this.recievedMessages.length) {
         return 'Not messages yet';
+      } else if (!this.isLoading && !this.error && this.recievedMessages.length) {
+        return 'Recieved Messages';
       }
     }
   },
   created() {
+    this.loadCoaches();
     this.getMessages();
   },
 };
 </script>
-
-<style scoped>
-.messages-list {
-  width: max-content;
-  margin: 0 auto;
-}
-.title {
-  text-align: center;
-  margin: 15px;
-  font-size: 20px;
-  font-weight: bold;
-}
-.el-button {
-  display: block;
-  margin: 0 auto;
-  width: 300px;
-}
-</style>

@@ -1,11 +1,11 @@
 <template>
-  <header class="el-header">
-    <nav class="navigation flex justify-center">
+  <header class="py-6">
+    <nav class="flex justify-center">
       <router-link to="/coaches" class="el-button">Coaches</router-link>
       <router-link v-if="isLoggedIn" to="/account" class="el-button">
         Your Account
       </router-link>
-      <user-auth v-if="!isLoggedIn"></user-auth>
+      <UserAuth v-if="!isLoggedIn" />
       <el-button v-if="isLoggedIn" @click="logout">Logout</el-button>
     </nav>
   </header>
@@ -29,9 +29,3 @@ export default {
     }
 };
 </script>
-
-<style>
-.navigation {
-  margin-top: 30px;
-}
-</style>

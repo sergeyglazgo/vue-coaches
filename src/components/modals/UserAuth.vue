@@ -1,5 +1,5 @@
 <template>
-  <el-button type="default" @click="dialogFormVisible = true">Sign In</el-button>
+  <el-button @click="dialogFormVisible = true">Sign In</el-button>
 
   <el-dialog width="480px" v-model="dialogFormVisible" title="Sign In">
     <p v-if="!!error">{{ error }}</p>
@@ -9,26 +9,25 @@
         :label-width="formLabelWidth"
         prop="email"
         label="Email"
-        :rules="[
-          {
-            type: 'email',
-            message: 'Please input correct email address',
-            trigger: ['blur', 'change'],
-          },
-        ]"
+        :rules="rules.email"
       >
         <el-input v-model="form.email" />
       </el-form-item>
-      <el-form-item label="Password" prop="pass" :label-width="formLabelWidth">
-        <el-input v-model="form.password" type="password" autocomplete="off" show-password />
+      <el-form-item label="Password" prop="password" :label-width="formLabelWidth">
+        <el-input
+          v-model="form.password"
+          type="password"
+          autocomplete="off"
+          show-password
+        />
       </el-form-item>
     </el-form>
-    <div v-if="!isFormValid" class="isFormValid flex justify-end">
+    <div v-if="!isFormValid" class="flex justify-end text-red-600">
       <span>Please fill the form</span>
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button @click="dialogFormVisible = false" class="mr-2">Cancel</el-button>
         <el-button @click="onSubmit">{{ submitButtonCaption }}</el-button>
         <el-button @click="switchAuthMode">{{ switchButtonCaption }}</el-button>
       </span>
@@ -48,6 +47,16 @@ export default {
       isFormValid: true,
       isLoading: false,
       error: null,
+      rules: {
+        email: [
+          { required: true },
+          {
+            type: "email",
+            message: "Please input correct email address",
+            trigger: ["blur", "change"],
+          },
+        ],
+      },
     };
   },
   computed: {
@@ -93,10 +102,9 @@ export default {
           await this.login({ ...this.form });
         } else {
           await this.signup({ ...this.form });
-        };
+        }
 
-        this.$router.replace('/account');
-
+        this.$router.replace("/account");
       } catch {
         this.error = "Failed to authenticate";
       }
@@ -113,16 +121,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.el-button--text {
-  margin-right: 15px;
-}
-.dialog-footer button:first-child {
-  margin-right: 10px;
-}
-.isFormValid {
-  margin: 0;
-  color: red;
-}
-</style>

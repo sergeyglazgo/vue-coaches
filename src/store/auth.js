@@ -10,6 +10,20 @@ export default {
       didAutoLogout: false,
     };
   },
+  getters: {
+    userId(state) {
+      return state.userId;
+    },
+    token(state) {
+      return state.token;
+    },
+    isAuthenticated(state) {
+      return !!state.token;
+    },
+    didAutoLogout(state) { 
+      return state.didAutoLogout;
+    }
+  },
   mutations: {
     setUser(state, payload) {
       state.token = payload.token;
@@ -101,20 +115,6 @@ export default {
     autoLogout(context) {
       context.dispatch('logout');
       context.commit('setAutoLogout');
-    }
-  },
-  getters: {
-    userId(state) {
-      return state.userId;
-    },
-    token(state) {
-      return state.token;
-    },
-    isAuthenticated(state) {
-      return !!state.token;
-    },
-    didAutoLogout(state) { 
-      return state.didAutoLogout;
     }
   },
 };

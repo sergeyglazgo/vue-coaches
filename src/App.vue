@@ -1,8 +1,6 @@
 <template>
-  <the-header></the-header>
-  <router-view name="register"></router-view>
-  <router-view name="coaches"></router-view>
-  <router-view name="account"></router-view>
+  <TheHeader />
+  <router-view></router-view>
 </template>
 
 <script>

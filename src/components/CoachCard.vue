@@ -1,14 +1,12 @@
 <template>
-  <el-card class="box-card">
+  <el-card class="w-[480px] mb-px">
     <template #header>
       <div class="flex justify-between items-center">
-        <span>
-          <strong>{{ name }} {{ lastName }}</strong>
-        </span>
-        <new-message :coachId="id"></new-message>
+        <span class="font-bold">{{ name }} {{ lastName }}</span>
+        <NewMessage :coachId="id" />
       </div>
     </template>
-    <div class="text item">
+    <div class="text-[14px] mb-4">
       {{ description }}
     </div>
   </el-card>
@@ -19,20 +17,23 @@ import NewMessage from './modals/NewMessage.vue';
 
 export default {
   components: { NewMessage },
-  props: ["id", "name", "lastName", "description", "rate"],
+  props: {
+    id: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    lastName: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    }
+  },
 };
 </script>
-
-<style scoped>
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
-.box-card {
-  width: 480px;
-}
-</style>

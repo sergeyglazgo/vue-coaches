@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card">
+  <el-card class="w-[480px] mb-px">
     <template #header>
       <div class="flex justify-between items-center">
         <span>
@@ -8,7 +8,7 @@
         <span>{{ email }}</span>
       </div>
     </template>
-    <div class="text item">
+    <div class="text-[14px] mb-3">
       {{ message }}
     </div>
   </el-card>
@@ -16,18 +16,19 @@
 
 <script>
 export default {
-  props: ["id", "name", "message", "email"],
+  props: {
+    name: {
+      type: String,
+      required: true
+    },
+    message: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true
+    }
+  },
 };
 </script>
-
-<style scoped>
-.text {
-  font-size: 14px;
-}
-.item {
-  margin-bottom: 18px;
-}
-.box-card {
-  width: 480px;
-}
-</style>

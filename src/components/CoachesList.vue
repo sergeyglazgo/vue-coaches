@@ -1,32 +1,29 @@
 <template>
-  <h2 class="title">
+  <h2 class="title text-center mb-4 font-bold text-3xl">
     {{ error ? "Somethting went wrong" : "Find your Coach" }}
   </h2>
-  <div class="search-wrapper">
+  <div class="search-wrapper w-[480px] mb-3 mx-auto">
     <el-input v-model="searchValue" placeholder="Search coach" />
   </div>
-  <the-loader v-if="!coaches.length && !error"></the-loader>
-  <ul class="coach-list">
+  <ul v-loading="!coaches.length && !error" class="w-max my-0 mx-auto">
     <li v-for="coach in filteredCoaches" :key="coach.id">
-      <coach-card
+      <CoachCard
         :id="coach.id"
         :name="coach.name"
-        :lastName="coach.lastName"
+        :last-name="coach.lastName"
         :description="coach.description"
-        :rate="coach.rate"
-      ></coach-card>
+      />
     </li>
   </ul>
 </template>
 
 <script>
 import CoachCard from "./CoachCard.vue";
-import TheLoader from "./TheLoader.vue";
 import { mapActions, mapGetters } from "vuex";
 import { ref } from "vue";
 
 export default {
-  components: { CoachCard, TheLoader },
+  components: { CoachCard },
   data() {
     return {
       error: null,
@@ -65,21 +62,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.coach-list {
-  width: max-content;
-  margin: 0 auto;
-}
-.title {
-  text-align: center;
-  margin-bottom: 15px;
-  font-size: 20px;
-  font-weight: bold;
-}
-.search-wrapper {
-  margin: 0 auto;
-  width: 480px;
-  margin-bottom: 15px;
-}
-</style>

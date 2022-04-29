@@ -14,7 +14,7 @@
       </el-form-item>
     </el-form>
     <div v-if="!isFormValid" class="isFormValid flex justify-end">
-      <span>Please fill the form</span>
+      <span class="text-red-600">Please fill the form</span>
     </div>
     <div class="flex justify-end">
       <el-button @click="cancel">Cancel</el-button>
@@ -28,7 +28,12 @@ import { reactive } from "vue";
 import { mapActions } from "vuex";
 
 export default {
-  props: ["coachId"],
+  props: {
+    coachId: {
+      type: String,
+      required: true,
+    }
+  },
   data() {
     return {
       dialogFormVisible: false,
@@ -76,16 +81,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.el-button--text {
-  margin-right: 15px;
-}
-.dialog-footer button:first-child {
-  margin-right: 10px;
-}
-.isFormValid {
-  margin: 0;
-  color: red;
-}
-</style>
