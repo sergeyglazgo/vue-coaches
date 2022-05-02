@@ -76,6 +76,7 @@ export default {
     },
   },
   created() {
+    this.loadCoaches();
     this.getMessages();
   },
 };
