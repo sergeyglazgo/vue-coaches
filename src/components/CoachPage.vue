@@ -41,9 +41,10 @@ export default {
       try {
         this.isLoading = true;
         await this.loadMessages();
-        this.isLoading = false;
       } catch {
         this.error = "Something went wrong";
+      } finally {
+        this.isLoading = false;
       }
     },
     async deleteMessageFromServer(messageId) {

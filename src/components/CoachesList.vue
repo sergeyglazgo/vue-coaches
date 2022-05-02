@@ -5,7 +5,7 @@
   <div class="search-wrapper w-[480px] mb-3 mx-auto">
     <el-input v-model="searchValue" placeholder="Search coach" />
   </div>
-  <ul v-loading="!coaches.length && !error" class="w-max my-0 mx-auto">
+  <ul v-loading="isLoading" class="w-max my-0 mx-auto">
     <li v-for="coach in filteredCoaches" :key="coach.id">
       <CoachCard
         :id="coach.id"
@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       error: null,
+      isLoading: false,
       searchValue: ref(""),
     };
   },
@@ -34,9 +35,12 @@ export default {
     ...mapActions(["loadCoaches"]),
     async getCoaches() {
       try {
+        this.isLoading = true;
         await this.loadCoaches();
       } catch {
         this.error = "Something went wrong";
+      } finally {
+        this.isLoading = false;
       }
     },
   },
