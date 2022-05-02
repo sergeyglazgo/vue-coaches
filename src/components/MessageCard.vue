@@ -2,14 +2,13 @@
   <el-card class="w-[480px] mb-px">
     <template #header>
       <div class="flex justify-between items-center">
-        <span>
-          <strong>{{ name }}</strong>
-        </span>
+        <span class="font-bold">{{ name }}</span>
         <span>{{ email }}</span>
       </div>
     </template>
-    <div class="text-[14px] mb-3">
-      {{ message }}
+    <div class="mb-3 flex justify-between">
+      <span class="text-[14px]">{{ message }}</span>
+      <el-button class="ml-2" @click="deleteMessage">Delete</el-button>
     </div>
   </el-card>
 </template>
@@ -19,16 +18,22 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     message: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
+  },
+  emits: ["deleteMessage"],
+  methods: {
+    deleteMessage() {
+      this.$emit("deleteMessage");
+    },
   },
 };
 </script>

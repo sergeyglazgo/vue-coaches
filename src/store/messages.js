@@ -13,11 +13,12 @@ export default {
   },
   mutations: {
     setMessages(state, payload) {
+      const userId = this.state.auth.userId;
       const messages = [];
       for (const id in payload) {
         messages.push({ id, ...payload[id] });
       }
-      state.messages = messages;
+      state.messages = messages.filter(message => message.coachId === userId);
     },
   },
   actions: {
@@ -29,5 +30,8 @@ export default {
     async sendMessage(_, payload) {
       await axios.post('/requests.json', payload);
     },
+    async deleteMessage(_, messageId) {
+      await axios.delete(`/requests/${messageId}.json`);
+    }
   },
 };

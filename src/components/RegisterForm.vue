@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="w-[500px] m-auto">
     <el-form
       :label-position="labelPosition.value"
       label-width="100px"
@@ -14,10 +14,10 @@
       <el-form-item label="Description">
         <el-input v-model.trim="form.description" type="textarea" />
       </el-form-item>
-      <el-form-item v-if="!isFormValid">
+      <el-form-item v-if="!isFormValid" class="text-red-600 m-0">
         <span>Please fill the form</span>
       </el-form-item>
-      <el-form-item v-if="error">
+      <el-form-item v-if="error" class="text-red-600 m-0">
         <span>{{ error }}</span>
       </el-form-item>
       <el-form-item>
@@ -81,3 +81,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.registration {
+  width: 500px;
+  margin: 0 auto;
+}
+</style>
