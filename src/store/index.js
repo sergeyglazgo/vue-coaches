@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
-import coachesModule from './coaches.js'
+import coachesModule from './coaches.js';
 import messagesModule from './messages.js';
 import authModule from './auth.js';
 
@@ -12,5 +12,5 @@ export const store = createStore({
     coaches: coachesModule,
     messages: messagesModule,
     auth: authModule,
-  }
+  },
 });

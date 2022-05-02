@@ -20,6 +20,9 @@ export default {
       }
       state.messages = messages.filter(message => message.coachId === userId);
     },
+    setMessagesAfterDeleting(state, messageId) {
+      state.messages = state.messages.filter(message => message.id !== messageId);
+    }
   },
   actions: {
     async loadMessages(context) {
@@ -30,8 +33,9 @@ export default {
     async sendMessage(_, payload) {
       await axios.post('/requests.json', payload);
     },
-    async deleteMessage(_, messageId) {
+    async deleteMessage(context, messageId) {
       await axios.delete(`/requests/${messageId}.json`);
-    }
+      context.commit('setMessagesAfterDeleting', messageId);
+    },
   },
 };

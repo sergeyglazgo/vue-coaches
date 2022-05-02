@@ -13,10 +13,10 @@
     <ul v-loading="isLoading" class="messages-list w-max mx-auto">
       <li v-for="message in messages" :key="message.id">
         <MessageCard
+          :id="message.id"
           :name="message.name"
           :message="message.message"
           :email="message.email"
-          @deleteMessage="deleteMessageFromServer(message.id)"
         />
       </li>
     </ul>
@@ -36,7 +36,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["loadMessages", "loadCoaches", "deleteMessage"]),
+    ...mapActions(["loadMessages", "loadCoaches"]),
     async getMessages() {
       try {
         this.isLoading = true;
@@ -46,10 +46,6 @@ export default {
       } finally {
         this.isLoading = false;
       }
-    },
-    async deleteMessageFromServer(messageId) {
-      await this.deleteMessage(messageId);
-      await this.getMessages();
     },
   },
   computed: {
