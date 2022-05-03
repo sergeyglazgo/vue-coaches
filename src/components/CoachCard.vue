@@ -15,7 +15,6 @@
 
 <script>
 import NewMessage from './modals/NewMessage.vue';
-// import { ref } from 'vue';
 
 export default {
   components: { NewMessage },
