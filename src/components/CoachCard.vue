@@ -3,6 +3,7 @@
     <template #header>
       <div class="flex justify-between items-center">
         <span class="font-bold">{{ name }} {{ lastName }}</span>
+        <el-rate v-model="value1" @click="setRate" />
         <NewMessage :coachId="id" />
       </div>
     </template>
@@ -14,6 +15,7 @@
 
 <script>
 import NewMessage from './modals/NewMessage.vue';
+// import { ref } from 'vue';
 
 export default {
   components: { NewMessage },
@@ -33,7 +35,21 @@ export default {
     description: {
       type: String,
       required: true
+    },
+    rate: {
+      type: Number,
+      required: true,
     }
   },
+  data() {
+    return {
+      value1: this.rate,
+    }
+  },
+  methods: {
+    setRate() {
+      console.log(this.value1);
+    }
+  }
 };
 </script>

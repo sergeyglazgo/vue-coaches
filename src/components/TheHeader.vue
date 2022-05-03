@@ -2,7 +2,7 @@
   <header class="py-6">
     <nav class="flex justify-center">
       <router-link to="/coaches" class="el-button">Coaches</router-link>
-      <router-link v-if="isLoggedIn" to="/account" class="el-button">
+      <router-link v-if="isLoggedIn" to="account" class="el-button">
         Your Account
       </router-link>
       <UserAuth v-if="!isLoggedIn" />

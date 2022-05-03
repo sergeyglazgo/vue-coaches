@@ -12,6 +12,7 @@
         :name="coach.name"
         :last-name="coach.lastName"
         :description="coach.description"
+        :rate="coach.rate"
       />
     </li>
   </ul>

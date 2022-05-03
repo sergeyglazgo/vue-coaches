@@ -61,7 +61,7 @@ export default {
         !this.error &&
         !this.messages.length
       ) {
-        return "Not messages yet";
+        return "No messages yet";
       } else if (
         !this.isLoading &&
         !this.error &&

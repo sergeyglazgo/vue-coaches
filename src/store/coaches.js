@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   state() {
@@ -31,4 +31,4 @@ export default {
       await axios.put(`/coaches/${userId}.json?auth=${token}`, payload);
     },
   },
-}
+};

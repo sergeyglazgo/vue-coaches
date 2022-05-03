@@ -65,12 +65,13 @@ export default {
       try {
         await this.saveInfo({
           ...this.form,
-          rate: "no ratings yet",
+          rate: 0,
         });
         this.isFormValid = true;
         this.form.name = "";
         this.form.lastName = "";
         this.form.description = "";
+        this.$router.replace('/account')
       } catch {
         this.error = 'Something went wrong';
       }
@@ -81,10 +82,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.registration {
-  width: 500px;
-  margin: 0 auto;
-}
-</style>
